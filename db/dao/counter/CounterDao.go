@@ -1,4 +1,4 @@
-package dao
+package counter
 
 import (
 	"wxcloudrun-golang/db"

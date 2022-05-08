@@ -1,4 +1,4 @@
-package dao
+package counter
 
 import (
 	"wxcloudrun-golang/db/model"
@@ -14,5 +14,5 @@ type CounterInterface interface {
 // CounterInterfaceImp 计数器数据模型实现
 type CounterInterfaceImp struct{}
 
-// Imp 实现实例
-var Imp CounterInterface = &CounterInterfaceImp{}
+// CounterImp 实现实例
+var CounterImp CounterInterface = &CounterInterfaceImp{}

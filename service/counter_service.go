@@ -6,19 +6,13 @@ import (
 	"io/ioutil"
 	"net/http"
 	"time"
+	"wxcloudrun-golang/common"
+	counterdao "wxcloudrun-golang/db/dao/counter"
 
-	"wxcloudrun-golang/db/dao"
 	"wxcloudrun-golang/db/model"
 
 	"gorm.io/gorm"
 )
-
-// JsonResult 返回结构
-type JsonResult struct {
-	Code     int         `json:"code"`
-	ErrorMsg string      `json:"errorMsg,omitempty"`
-	Data     interface{} `json:"data"`
-}
 
 // IndexHandler 计数器接口
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +26,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 // CounterHandler 计数器接口
 func CounterHandler(w http.ResponseWriter, r *http.Request) {
-	res := &JsonResult{}
+	res := &common.R{}
 
 	if r.Method == http.MethodGet {
 		counter, err := getCurrentCounter()
@@ -111,7 +105,7 @@ func upsertCounter(r *http.Request) (int32, error) {
 		CreatedAt: createdAt,
 		UpdatedAt: time.Now(),
 	}
-	err = dao.Imp.UpsertCounter(counter)
+	err = counterdao.CounterImp.UpsertCounter(counter)
 	if err != nil {
 		return 0, err
 	}
@@ -119,12 +113,12 @@ func upsertCounter(r *http.Request) (int32, error) {
 }
 
 func clearCounter() error {
-	return dao.Imp.ClearCounter(1)
+	return counterdao.CounterImp.ClearCounter(1)
 }
 
 // getCurrentCounter 查询当前计数器
 func getCurrentCounter() (*model.CounterModel, error) {
-	counter, err := dao.Imp.GetCounter(1)
+	counter, err := counterdao.CounterImp.GetCounter(1)
 	if err != nil {
 		return nil, err
 	}
