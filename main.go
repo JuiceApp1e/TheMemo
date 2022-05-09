@@ -16,5 +16,5 @@ func main() {
 
 	db.Get().AutoMigrate(&model.TodoModel{})
 
-	r.Run(":9000")
+	r.Run(":80")
 }
