@@ -20,9 +20,14 @@ func SaveTodosList(c *gin.Context) {
 	_ = json.Unmarshal(b, &m)
 	log.Println(m)
 
-	openid := m["key"].(string)
+	var openid interface{}
+	for k, v := range c.Request.Header {
+		fmt.Println(k)
+		fmt.Println(v)
+	}
+	openidd := openid.(string)
 
-	service.SaveTodos(openid, m["todos"])
+	service.SaveTodos(openidd, m["todos"])
 	c.JSON(http.StatusOK, m)
 }
 
@@ -51,8 +56,12 @@ func GetOpenId(c *gin.Context) {
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-	fmt.Println(body)
-	fmt.Println(string(body))
+
+	fmt.Println("---header/--- \r\n")
+	for k, v := range c.Request.Header {
+		fmt.Println(k, v)
+	}
+
 	json := gojsonq.New().FromString(string(body)).Find("openid")
 	fmt.Println(json)
 	openId := json.(string)
