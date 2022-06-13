@@ -20,19 +20,24 @@ func SaveTodosList(c *gin.Context) {
 	_ = json.Unmarshal(b, &m)
 	log.Println(m)
 
-	var openid interface{}
+	var openid string
 	for k, v := range c.Request.Header {
-		fmt.Println(k)
-		fmt.Println(v)
+		if k == "X-Wx-Openid" {
+			openid = v[0]
+		}
 	}
-	openidd := openid.(string)
-	service.SaveTodos(openidd, m["todos"])
+	service.SaveTodos(openid, m["todos"])
 	c.JSON(http.StatusOK, m)
 }
 
 func GetTodosList(c *gin.Context) {
 	// 注意：下面为了举例子方便，暂时忽略了错误处理
-	openid := c.Query("key")
+	var openid string
+	for k, v := range c.Request.Header {
+		if k == "X-Wx-Openid" {
+			openid = v[0]
+		}
+	}
 
 	result, _ := service.GetTodos(openid)
 	fmt.Println(result)
