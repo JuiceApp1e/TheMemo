@@ -52,6 +52,7 @@ func GetOpenId(c *gin.Context) {
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	fmt.Println(body)
+	fmt.Println(string(body))
 	json := gojsonq.New().FromString(string(body)).Find("openid")
 	fmt.Println(json)
 	openId := json.(string)
