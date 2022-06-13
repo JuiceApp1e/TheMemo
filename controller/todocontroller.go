@@ -43,17 +43,17 @@ func GetOpenId(c *gin.Context) {
 	)
 	//获取code
 	code := c.Query("code")
-	fmt.Println(code)
 	//调用auth.code2Session接口获取openid
 	url := fmt.Sprintf(code2sessionURL, appID, appSecret, code)
-	fmt.Println(url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
+	fmt.Println(body)
 	json := gojsonq.New().FromString(string(body)).Find("openid")
+	fmt.Println(json)
 	openId := json.(string)
 	c.JSON(http.StatusOK, openId)
 }
