@@ -26,7 +26,6 @@ func SaveTodosList(c *gin.Context) {
 		fmt.Println(v)
 	}
 	openidd := openid.(string)
-
 	service.SaveTodos(openidd, m["todos"])
 	c.JSON(http.StatusOK, m)
 }
