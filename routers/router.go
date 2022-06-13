@@ -26,7 +26,7 @@ func SetupRouter() *gin.Engine {
 	{
 		v2.POST("/todo", controller.SaveTodosList)
 		v2.GET("/todo", controller.GetTodosList)
-		//v2.GET("/todo/:openid", controller.GetTodosIsInited)
+		v2.GET("/todo/openid", controller.GetOpenId)
 	}
 	return r
 }
