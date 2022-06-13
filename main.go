@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"wxcloudrun-golang/db"
-	"wxcloudrun-golang/db/model"
 	"wxcloudrun-golang/routers"
 )
 
@@ -13,8 +12,6 @@ func main() {
 	}
 
 	r := routers.SetupRouter()
-
-	db.Get().AutoMigrate(&model.TodoModel{})
 
 	r.Run(":80")
 }
